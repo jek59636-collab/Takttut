@@ -8,338 +8,353 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Exo+2:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#07071a;--panel:#0f0f28;--red:#ff2d55;--gold:#ffd700;--dim:rgba(255,255,255,0.35)}
-body{background:var(--bg);font-family:'Exo 2',sans-serif;color:#fff;min-height:100vh;overflow-x:hidden}
+body{background:#1a1a2e;font-family:'Exo 2',sans-serif;color:#fff;height:100vh;overflow:hidden}
 
 /* SETUP */
-#setup{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:28px;z-index:99}
-.logo{font-family:'Orbitron',monospace;font-size:26px;font-weight:900;letter-spacing:3px}
-.logo span{color:var(--red)}
-.card{background:var(--panel);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:26px 22px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:14px}
-.lbl{font-size:11px;color:var(--dim);letter-spacing:2px;font-weight:700}
-.inp{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:13px 15px;color:#fff;font-size:16px;font-weight:700;width:100%;outline:none;font-family:'Exo 2',sans-serif;transition:border .2s}
-.inp:focus{border-color:var(--red)}
-.inp::placeholder{color:var(--dim)}
-.cbtn{background:var(--red);color:#fff;border:none;border-radius:13px;padding:15px;font-family:'Orbitron',monospace;font-size:13px;font-weight:900;letter-spacing:2px;cursor:pointer}
-.cbtn:disabled{opacity:.4}
-#sstat{font-size:12px;text-align:center;color:var(--dim);min-height:18px}
+#setup{position:fixed;inset:0;background:linear-gradient(135deg,#0f0f23,#1a1a3e);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;z-index:99}
+.logo{font-family:'Orbitron',monospace;font-size:22px;font-weight:900;letter-spacing:3px;text-align:center}
+.logo span{color:#2d7aff}
+.scard{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:24px 20px;width:100%;max-width:340px;display:flex;flex-direction:column;gap:12px}
+.slbl{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:2px;font-weight:700}
+.sinp{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:12px 14px;color:#fff;font-size:15px;font-weight:700;width:100%;outline:none;font-family:'Exo 2',sans-serif}
+.sinp::placeholder{color:rgba(255,255,255,0.25)}
+.scbtn{background:#2d7aff;color:#fff;border:none;border-radius:12px;padding:14px;font-family:'Orbitron',monospace;font-size:12px;font-weight:900;letter-spacing:2px;cursor:pointer}
+.scbtn:disabled{opacity:.4}
+#sstat{font-size:11px;text-align:center;color:rgba(255,255,255,0.4);min-height:16px}
 #sstat.err{color:#ff6b6b}
-#sstat.ok{color:#2ecc71}
-#sstat.load{color:var(--gold)}
+#sstat.load{color:#ffd700}
 
 /* GAME */
-#game{display:none}
-.hdr{background:var(--panel);border-bottom:1px solid rgba(255,255,255,0.06);padding:9px 13px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.htitle{font-family:'Orbitron',monospace;font-size:13px;font-weight:900;letter-spacing:2px}
-.htitle span{color:var(--red)}
-.hright{display:flex;align-items:center;gap:8px}
-.ldot{width:7px;height:7px;background:var(--red);border-radius:50%;animation:bl 1.2s infinite}
-@keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
-.llbl{font-family:'Orbitron',monospace;font-size:10px;color:var(--red);letter-spacing:2px}
-.dcbtn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:7px;color:var(--dim);font-size:10px;padding:5px 9px;cursor:pointer;font-family:'Exo 2',sans-serif}
-.ubar{background:rgba(255,45,85,0.07);border-bottom:1px solid rgba(255,45,85,0.12);padding:6px 13px;font-size:11px;color:rgba(255,255,255,0.5);text-align:center}
-.ubar b{color:var(--red)}
+#game{display:none;height:100vh;flex-direction:column}
 
-/* WINS BAR */
-.wbar{display:flex;gap:5px;padding:7px 11px;overflow-x:auto;scrollbar-width:none;background:rgba(0,0,0,.25);border-bottom:1px solid rgba(255,255,255,0.05)}
-.wbar::-webkit-scrollbar{display:none}
-.wchip{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:4px 9px;white-space:nowrap;flex-shrink:0;transition:all .3s}
-.wchip.lead{border-color:var(--gold);background:rgba(255,215,0,0.08)}
-.wchip .wf{font-size:13px}.wchip .wn{font-size:9px;color:var(--dim);font-weight:700}.wchip .wc{font-family:'Orbitron',monospace;color:var(--gold);font-size:10px;font-weight:900}
+/* HEADER */
+.ghdr{background:#0d1117;padding:7px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}
+.gtitle{font-family:'Orbitron',monospace;font-size:12px;font-weight:900;letter-spacing:2px;color:#fff}
+.gtitle span{color:#2d7aff}
+.hbtns{display:flex;align-items:center;gap:6px}
+.ldot{width:6px;height:6px;background:#ff2d55;border-radius:50%;animation:bl 1s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.2}}
+.hbtn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:rgba(255,255,255,0.6);font-size:9px;padding:4px 8px;cursor:pointer;font-family:'Exo 2',sans-serif}
+.hbtn.blue{background:#2d7aff;border-color:#2d7aff;color:#fff}
 
-/* TRACKS */
-.tracks{padding:9px 9px 3px;display:flex;flex-direction:column;gap:8px}
-.row{display:flex;align-items:center;gap:6px;position:relative}
-.rnum{font-family:'Orbitron',monospace;font-size:9px;color:var(--dim);width:14px;text-align:center;flex-shrink:0}
-.rnum.r1{color:var(--gold)}.rnum.r2{color:#c0c0c0}.rnum.r3{color:#cd7f32}
-.fcell{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.trk{flex:1;height:34px;background:rgba(255,255,255,0.03);border-radius:17px;border:1px solid rgba(255,255,255,0.06);position:relative;overflow:visible}
-.trk::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.08) 0,rgba(255,255,255,0.08) 7px,transparent 7px,transparent 16px);transform:translateY(-50%);border-radius:17px;overflow:hidden}
+/* STATUS BAR */
+.sbar{background:#161b22;padding:4px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.sbar-l{font-size:10px;color:rgba(255,255,255,0.4)}
+.sbar-l b{color:#2d7aff}
+.sbar-r{display:flex;align-items:center;gap:10px}
+.timer-disp{font-family:'Orbitron',monospace;font-size:11px;color:#ffd700;font-weight:900}
+.target-disp{font-size:9px;color:rgba(255,255,255,0.4)}
 
-/* finish line inside track - clip it */
-.trk-inner{position:absolute;inset:0;border-radius:17px;overflow:hidden}
-.trl{position:absolute;top:50%;transform:translateY(-50%);height:2px;border-radius:2px;left:2px;width:0;transition:width .35s cubic-bezier(.25,.46,.45,.94);opacity:.45}
-.tfin{position:absolute;right:0;top:0;bottom:0;width:11px;background:repeating-linear-gradient(180deg,#fff 0,#fff 3px,#000 3px,#000 6px);opacity:.55;z-index:3}
+/* MAIN */
+.gmain{display:flex;flex:1;overflow:hidden}
+
+/* RACE */
+.race-area{flex:1;display:flex;flex-direction:column;justify-content:space-around;padding:6px 0;position:relative;overflow:hidden;background:linear-gradient(180deg,#1a2744 0%,#0d1b2e 100%)}
+
+/* Clouds */
+.race-area::before{content:'☁️ ☁️ ☁️ ☁️';position:absolute;top:4px;left:0;right:0;font-size:16px;opacity:0.15;letter-spacing:30px;pointer-events:none}
+
+/* ROAD ROW */
+.road-row{position:relative;height:58px;margin:2px 6px;flex-shrink:0}
+.road{position:absolute;inset:0;border-radius:8px;overflow:hidden;background:linear-gradient(180deg,#2c3040 0%,#1e2232 50%,#2c3040 100%);border:1px solid rgba(255,255,255,0.04)}
+.road-lines{position:absolute;top:50%;left:0;right:0;height:2px;transform:translateY(-50%);background:repeating-linear-gradient(90deg,rgba(255,220,0,0.25) 0,rgba(255,220,0,0.25) 15px,transparent 15px,transparent 35px);animation:rl 0.6s linear infinite}
+@keyframes rl{from{background-position:0}to{background-position:-35px}}
+
+/* Grass edges */
+.road::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:rgba(39,174,96,0.3);border-radius:8px 8px 0 0}
+.road::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:rgba(39,174,96,0.3);border-radius:0 0 8px 8px}
+
+/* Finish */
+.finish{position:absolute;right:0;top:0;bottom:0;width:14px;background:repeating-linear-gradient(180deg,#fff 0,#fff 4px,#000 4px,#000 8px);z-index:5;border-radius:0 8px 8px 0}
+
+/* Flag */
+.cflag{position:absolute;left:4px;top:50%;transform:translateY(-50%);z-index:10;display:flex;align-items:center;gap:3px;background:rgba(0,0,0,0.55);border-radius:5px;padding:2px 5px;border:1px solid rgba(255,255,255,0.08)}
+.cflag .flag{font-size:14px}
+.cflag .cname{font-size:7px;font-weight:700;color:rgba(255,255,255,0.75)}
+
+/* Speed trail */
+.spd-trail{position:absolute;top:50%;transform:translateY(-50%);left:55px;height:3px;border-radius:2px;width:0;opacity:0.35;transition:width 0.5s}
 
 /* CAR */
-.tcar{position:absolute;top:50%;transform:translateY(-50%);font-size:18px;left:2px;transition:left .35s cubic-bezier(.25,.46,.45,.94);z-index:10;line-height:1;filter:drop-shadow(0 0 5px rgba(255,255,255,.3))}
-.tcar.jump{animation:carjump .4s ease}
-@keyframes carjump{0%{transform:translateY(-50%)}40%{transform:translateY(-80%)}100%{transform:translateY(-50%)}}
+.car{position:absolute;top:50%;transform:translateY(-50%);font-size:22px;left:55px;transition:left 0.5s cubic-bezier(0.25,0.46,0.45,0.94);z-index:10;line-height:1;filter:drop-shadow(1px 2px 3px rgba(0,0,0,0.6))}
+.car.boost{animation:cb 0.35s ease}
+@keyframes cb{0%{transform:translateY(-50%) scale(1)}45%{transform:translateY(-65%) scale(1.15)}100%{transform:translateY(-50%) scale(1)}}
 
-/* GIFT BUBBLE on car */
-.gift-bubble{position:absolute;top:-28px;transform:translateX(-50%);background:rgba(0,0,0,0.75);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:2px 6px;font-size:11px;white-space:nowrap;z-index:20;animation:bubbleUp .9s ease forwards;pointer-events:none;display:flex;align-items:center;gap:3px}
-@keyframes bubbleUp{0%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(-30px)}}
-.bubble-icon{font-size:14px}
-.bubble-text{font-size:9px;color:#fff;font-weight:700}
-.bubble-pts{font-family:'Orbitron',monospace;font-size:9px;color:var(--gold);font-weight:900}
+/* Score on track */
+.track-score{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-family:'Orbitron',monospace;font-size:8px;color:rgba(255,255,255,0.3);z-index:4}
 
-.pbox{width:34px;text-align:center;flex-shrink:0}
-.pval{font-family:'Orbitron',monospace;font-size:11px;font-weight:900}
-.plbl{font-size:7px;color:var(--dim);letter-spacing:1px}
+/* Gift popup */
+.gpop{position:absolute;z-index:20;pointer-events:none;animation:gpup 1.1s ease forwards;display:flex;flex-direction:column;align-items:center}
+@keyframes gpup{0%{opacity:1;transform:translateY(0)}80%{opacity:0.8;transform:translateY(-32px)}100%{opacity:0;transform:translateY(-44px)}}
+.gpop .gi{font-size:18px}
+.gpop .gn{font-size:7px;background:rgba(0,0,0,0.65);border-radius:3px;padding:1px 3px;color:#ffd700;font-weight:700;white-space:nowrap;margin-top:1px}
+.gpop .gp{font-size:8px;font-family:'Orbitron',monospace;color:#2ecc71;font-weight:900}
 
-/* GIFT FEED */
-.feedwrap{margin:7px 9px;background:var(--panel);border:1px solid rgba(255,255,255,0.06);border-radius:13px;overflow:hidden}
-.feedtitle{padding:7px 11px;font-size:9px;color:var(--dim);letter-spacing:2px;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(0,0,0,.2)}
-.feed{max-height:100px;overflow-y:auto;padding:5px;display:flex;flex-direction:column;gap:4px;scrollbar-width:none}
-.feed::-webkit-scrollbar{display:none}
-.fitem{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.03);border-radius:7px;padding:5px 9px;animation:si .3s ease;border:1px solid rgba(255,255,255,0.05)}
-@keyframes si{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
-.ffl{font-size:15px}.fgift-icon{font-size:15px}.finfo{flex:1;min-width:0}
-.fv{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fg{font-size:9px;color:var(--dim)}
-.fpts{font-family:'Orbitron',monospace;font-size:10px;color:var(--gold);font-weight:900;white-space:nowrap}
+/* Rank badge */
+.rbadge{position:absolute;right:16px;top:50%;transform:translateY(-50%);z-index:6;width:14px;height:14px;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:7px;font-weight:900;font-family:'Orbitron',monospace}
+.rb1{background:#ffd700;color:#000;display:flex}
+.rb2{background:#c0c0c0;color:#000;display:flex}
+.rb3{background:#cd7f32;color:#000;display:flex}
 
-.resetwrap{padding:7px 9px 13px}
-.resetbtn{width:100%;padding:11px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:11px;color:var(--dim);font-family:'Exo 2',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px}
+/* LEADERBOARD */
+.leaderboard{width:85px;background:#0d1117;border-left:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;flex-shrink:0}
+.lb-hdr{font-size:8px;color:rgba(255,255,255,0.3);letter-spacing:1px;font-weight:700;padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.05);text-align:center}
+.lb-list{flex:1;overflow-y:auto;padding:3px;display:flex;flex-direction:column;gap:2px;scrollbar-width:none}
+.lb-list::-webkit-scrollbar{display:none}
+.lb-item{display:flex;align-items:center;gap:3px;background:rgba(255,255,255,0.03);border-radius:4px;padding:3px 4px;border:1px solid transparent;transition:all 0.3s}
+.lb-item.top{border-color:rgba(255,215,0,0.25);background:rgba(255,215,0,0.05)}
+.lb-fl{font-size:11px;flex-shrink:0}
+.lb-inf{flex:1;min-width:0}
+.lb-nm{font-size:7px;font-weight:700;color:rgba(255,255,255,0.65);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-pt{font-size:6px;font-family:'Orbitron',monospace;color:#ffd700}
+.lb-rk{font-size:6px;color:rgba(255,255,255,0.25);font-family:'Orbitron',monospace}
+
+/* COMMENT FEED */
+.cmtfeed{background:#0d1117;border-top:1px solid rgba(255,255,255,0.05);padding:3px 8px;min-height:24px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;gap:6px}
+.cmtfeed-inner{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1}
+.cmtfeed-inner::-webkit-scrollbar{display:none}
+.cmtchip{display:flex;align-items:center;gap:3px;background:rgba(255,255,255,0.05);border-radius:10px;padding:2px 7px;white-space:nowrap;flex-shrink:0;border:1px solid rgba(255,255,255,0.07);animation:cin 0.3s ease}
+@keyframes cin{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
+.cmtfl{font-size:11px}.cmtgi{font-size:11px}
+.cmtvw{font-size:8px;font-weight:700;max-width:55px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmtpt{font-size:8px;font-family:'Orbitron',monospace;color:#ffd700}
+
+/* BOTTOM BAR */
+.bbar{background:#0d1117;border-top:1px solid rgba(255,255,255,0.05);padding:4px 8px;display:flex;gap:6px;flex-shrink:0}
+.bbtn{flex:1;padding:7px;border-radius:8px;border:none;font-family:'Exo 2',sans-serif;font-size:10px;font-weight:700;cursor:pointer;transition:opacity .2s}
+.bbtn:active{opacity:.7}
+.bbtn-ctrl{background:#2d7aff;color:#fff}
+.bbtn-reset{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.4)}
+.bbtn-full{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.4)}
+
+/* CONTROL PANEL OVERLAY */
+#cpanel{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:none;align-items:flex-end}
+#cpanel.show{display:flex;animation:slideup 0.3s ease}
+@keyframes slideup{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.cpanel-card{background:#161b22;border-radius:20px 20px 0 0;width:100%;max-height:85vh;overflow-y:auto;padding:16px;border:1px solid rgba(255,255,255,0.08);border-bottom:none}
+.cp-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.cp-title{font-family:'Orbitron',monospace;font-size:14px;font-weight:900;color:#fff}
+.cp-close{background:rgba(255,255,255,0.08);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.cp-section{margin-bottom:14px}
+.cp-slbl{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;font-weight:700;margin-bottom:6px}
+.cp-inp{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 12px;color:#fff;font-size:14px;font-weight:700;width:100%;outline:none;font-family:'Exo 2',sans-serif;display:flex;align-items:center;gap:8px}
+.cp-inp input{background:none;border:none;color:#fff;font-size:14px;font-weight:700;flex:1;outline:none;font-family:'Exo 2',sans-serif}
+.cp-inp .unit{font-size:11px;color:rgba(255,255,255,0.3)}
+.cp-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.cp-row:last-child{border-bottom:none}
+.cp-row-lbl{font-size:12px;color:rgba(255,255,255,0.7)}
+.toggle{width:44px;height:24px;background:rgba(255,255,255,0.1);border-radius:12px;position:relative;cursor:pointer;transition:background .3s;flex-shrink:0}
+.toggle.on{background:#2d7aff}
+.toggle::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .3s;box-shadow:0 1px 4px rgba(0,0,0,0.3)}
+.toggle.on::after{left:23px}
+.cp-select{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px 10px;color:#fff;font-size:12px;outline:none;font-family:'Exo 2',sans-serif;width:100%}
+.cp-connect-row{display:flex;gap:8px;align-items:center}
+.cp-connect-inp{flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 12px;color:#fff;font-size:14px;font-weight:700;outline:none;font-family:'Exo 2',sans-serif}
+.cp-connect-inp::placeholder{color:rgba(255,255,255,0.25)}
+.cp-cbtn{background:#2d7aff;color:#fff;border:none;border-radius:8px;padding:10px 14px;font-size:12px;font-weight:900;cursor:pointer;white-space:nowrap}
+.cp-status{font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px}
+.cp-status.conn{color:#2ecc71}
+.cp-status.err{color:#ff6b6b}
+.cp-status.load{color:#ffd700}
 
 /* WINNER */
-#wov{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;flex-direction:column;gap:17px;z-index:999}
-#wov.show{display:flex;animation:fi .3s}
+#wov{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;z-index:999}
+#wov.show{display:flex;animation:fi 0.3s}
 @keyframes fi{from{opacity:0}to{opacity:1}}
-.wcard{background:linear-gradient(135deg,#12122a,#1a1a3e);border:2px solid var(--gold);border-radius:22px;padding:30px 38px;text-align:center;box-shadow:0 0 45px rgba(255,215,0,.2)}
-.wflag{font-size:60px;margin-bottom:8px}
-.wname{font-family:'Orbitron',monospace;color:var(--gold);font-size:22px;font-weight:900;letter-spacing:2px}
-.wsub{color:var(--dim);font-size:13px;margin-top:7px}
-.nbtn{background:var(--red);color:#fff;border:none;border-radius:13px;padding:13px 30px;font-family:'Orbitron',monospace;font-size:13px;font-weight:900;letter-spacing:2px;cursor:pointer}
+.wcard{background:linear-gradient(135deg,#12122a,#1a1a3e);border:2px solid #ffd700;border-radius:20px;padding:28px 36px;text-align:center;box-shadow:0 0 40px rgba(255,215,0,0.2)}
+.wflag{font-size:54px}
+.wname{font-family:'Orbitron',monospace;color:#ffd700;font-size:18px;font-weight:900;margin:8px 0}
+.wsub{color:rgba(255,255,255,0.4);font-size:11px}
+.wnbtn{background:#2d7aff;color:#fff;border:none;border-radius:12px;padding:12px 28px;font-family:'Orbitron',monospace;font-size:12px;font-weight:900;letter-spacing:1px;cursor:pointer}
 
-.cp{position:fixed;width:7px;height:7px;border-radius:2px;animation:cf 2s linear forwards;z-index:1000;pointer-events:none}
-@keyframes cf{0%{transform:translateY(-15px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+/* CONFETTI */
+.cp2{position:fixed;width:7px;height:7px;border-radius:2px;animation:cf 2s linear forwards;z-index:1000;pointer-events:none}
+@keyframes cf{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 </style>
 </head>
 <body>
 
 <!-- SETUP -->
 <div id="setup">
-  <div class="logo">COUNTRY <span>RACE</span> 🏎️</div>
-  <div class="card">
-    <div class="lbl">TIKTOK USERNAME</div>
-    <input class="inp" id="uinp" type="text" placeholder="@yourusername" autocomplete="off" autocorrect="off" spellcheck="false">
-    <button class="cbtn" id="cbtn" onclick="doConnect()">🔴 CONNECT TO LIVE</button>
-    <div id="sstat">Enter your TikTok username</div>
+  <div class="logo">🏎️ COUNTRY <span>RACE</span></div>
+  <div class="scard">
+    <div class="slbl">TIKTOK USERNAME</div>
+    <input class="sinp" id="uinp" type="text" placeholder="@yourusername" autocomplete="off" autocorrect="off" spellcheck="false">
+    <button class="scbtn" id="scbtn" onclick="doConnect()">▶ CONNECT TO LIVE</button>
+    <div id="sstat">Please start your TikTok Live first</div>
   </div>
 </div>
 
 <!-- GAME -->
 <div id="game">
-  <div class="hdr">
-    <div class="htitle">COUNTRY <span>RACE</span></div>
-    <div class="hright"><div class="ldot"></div><div class="llbl">LIVE</div><button class="dcbtn" onclick="doDisconnect()">✕ DC</button></div>
+  <div class="ghdr">
+    <div class="gtitle">RACE <span>CAR</span> 🏎️</div>
+    <div class="hbtns">
+      <div class="ldot"></div>
+      <button class="hbtn" onclick="toggleFullscreen()">⛶ Full</button>
+      <button class="hbtn blue" onclick="openPanel()">⚙️ Panel</button>
+    </div>
   </div>
-  <div class="ubar">Connected: <b id="cusr">@user</b></div>
-  <div class="wbar" id="wbar"></div>
-  <div class="tracks" id="tracks"></div>
-  <div class="feedwrap">
-    <div class="feedtitle">🎁 LIVE GIFTS</div>
-    <div class="feed" id="feed"><div style="text-align:center;color:rgba(255,255,255,.18);font-size:11px;padding:18px 0">Waiting for gifts...</div></div>
+
+  <div class="sbar">
+    <div class="sbar-l">🔴 <b id="cusr">@user</b></div>
+    <div class="sbar-r">
+      <span class="target-disp">🎯 <span id="targetDisp">500</span>pts</span>
+      <span class="timer-disp" id="timerDisp">15:00</span>
+    </div>
   </div>
-  <div class="resetwrap"><button class="resetbtn" onclick="resetRace(false)">🔄 NEW RACE</button></div>
+
+  <div class="gmain">
+    <div class="race-area" id="raceArea"></div>
+    <div class="leaderboard">
+      <div class="lb-hdr">🏆 RANK</div>
+      <div class="lb-list" id="lbList"></div>
+    </div>
+  </div>
+
+  <div class="cmtfeed" id="cmtfeed" style="display:flex">
+    <span style="font-size:9px;color:rgba(255,255,255,0.2);flex-shrink:0">🎁</span>
+    <div class="cmtfeed-inner" id="feedInner"><span style="font-size:9px;color:rgba(255,255,255,0.2)">Waiting for gifts...</span></div>
+  </div>
+
+  <div class="bbar">
+    <button class="bbtn bbtn-ctrl" onclick="openPanel()">⚙️ Control Panel</button>
+    <button class="bbtn bbtn-reset" onclick="resetRace(false)">🔄 Restart</button>
+    <button class="bbtn bbtn-full" onclick="toggleFullscreen()">⛶</button>
+  </div>
+</div>
+
+<!-- CONTROL PANEL -->
+<div id="cpanel">
+  <div class="cpanel-card">
+    <div class="cp-hdr">
+      <div class="cp-title">Control Panel</div>
+      <button class="cp-close" onclick="closePanel()">✕</button>
+    </div>
+
+    <!-- Live Chat Feed -->
+    <div class="cp-section">
+      <div class="cp-slbl">LIVE CHAT FEED</div>
+      <div class="cp-connect-row">
+        <input class="cp-connect-inp" id="cpUinp" type="text" placeholder="Enter your username">
+        <button class="cp-cbtn" onclick="doConnectPanel()">Connect</button>
+      </div>
+      <div class="cp-status" id="cpStatus">Not Connected</div>
+    </div>
+
+    <!-- Settings -->
+    <div class="cp-section">
+      <div class="cp-slbl">MORE CUSTOMIZATION</div>
+      <div class="cp-row">
+        <span class="cp-row-lbl">Show Comments</span>
+        <div class="toggle on" id="togComments" onclick="toggleSetting('comments')"></div>
+      </div>
+      <div class="cp-row">
+        <span class="cp-row-lbl">Enable Total Score</span>
+        <div class="toggle on" id="togScore" onclick="toggleSetting('score')"></div>
+      </div>
+      <div class="cp-row">
+        <span class="cp-row-lbl">Gift Info</span>
+        <select class="cp-select" id="giftInfoMode" onchange="settings.giftInfo=this.value">
+          <option value="icon">Show Gift Icon</option>
+          <option value="name">Show Gift Name</option>
+          <option value="both">Show Both</option>
+          <option value="none">Hide</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Race Settings -->
+    <div class="cp-section">
+      <div class="cp-slbl">RACE SETTINGS</div>
+      <div class="cp-row">
+        <span class="cp-row-lbl">Target Coins for Winner</span>
+        <div class="cp-inp" style="width:100px">
+          <input type="number" id="targetInput" value="500" min="50" max="9999" onchange="updateTarget()">
+          <span class="unit">pts</span>
+        </div>
+      </div>
+      <div class="cp-row">
+        <span class="cp-row-lbl">Race Timeout</span>
+        <div class="cp-inp" style="width:100px">
+          <input type="number" id="timeoutInput" value="900" min="60" max="3600" onchange="updateTimeout()">
+          <span class="unit">sec</span>
+        </div>
+      </div>
+      <div class="cp-row">
+        <span class="cp-row-lbl">Title Text</span>
+        <input class="cp-connect-inp" id="titleInput" value="RACE CAR" onchange="updateTitle()">
+      </div>
+    </div>
+
+    <!-- Disconnect -->
+    <button style="width:100%;padding:10px;background:rgba(255,45,85,0.15);border:1px solid rgba(255,45,85,0.3);border-radius:8px;color:#ff2d55;font-size:12px;font-weight:700;cursor:pointer;margin-top:4px" onclick="doDisconnect()">Disconnect</button>
+  </div>
 </div>
 
 <!-- WINNER -->
 <div id="wov">
-  <div class="wcard"><div class="wflag" id="wfl">🏆</div><div class="wname" id="wnm">WINNER!</div><div class="wsub" id="wsb"></div></div>
-  <button class="nbtn" onclick="nextRace()">▶ NEXT RACE</button>
+  <div class="wcard">
+    <div class="wflag" id="wfl">🏆</div>
+    <div class="wname" id="wnm">WINNER!</div>
+    <div class="wsub" id="wsb"></div>
+  </div>
+  <button class="wnbtn" onclick="nextRace()">▶ NEXT RACE</button>
 </div>
 
 <script>
 const C=[
-  {name:'Saudi',  flag:'🇸🇦',car:'🏎️',col:'#2ecc40'},
-  {name:'Egypt',  flag:'🇪🇬',car:'🚗',col:'#ff4136'},
-  {name:'Pakistan',flag:'🇵🇰',car:'🚙',col:'#01d68f'},
-  {name:'UAE',    flag:'🇦🇪',car:'🏁',col:'#ff851b'},
-  {name:'Kuwait', flag:'🇰🇼',car:'🚕',col:'#ffdc00'},
-  {name:'Qatar',  flag:'🇶🇦',car:'🏎️',col:'#b10dc9'},
-  {name:'Bahrain',flag:'🇧🇭',car:'🚗',col:'#ff69b4'},
-  {name:'Oman',   flag:'🇴🇲',car:'🚙',col:'#7fdbff'},
-  {name:'Algeria',flag:'🇩🇿',car:'🚕',col:'#3d9970'},
-  {name:'Morocco',flag:'🇲🇦',car:'🏎️',col:'#ff6b6b'},
+  {name:'Saudi',  flag:'🇸🇦',car:'🏎️',col:'#27ae60'},
+  {name:'Egypt',  flag:'🇪🇬',car:'🚗', col:'#e74c3c'},
+  {name:'Pakistan',flag:'🇵🇰',car:'🚙',col:'#2ecc71'},
+  {name:'UAE',    flag:'🇦🇪',car:'🏁', col:'#e67e22'},
+  {name:'Kuwait', flag:'🇰🇼',car:'🚕', col:'#f1c40f'},
+  {name:'Qatar',  flag:'🇶🇦',car:'🏎️',col:'#9b59b6'},
+  {name:'Bahrain',flag:'🇧🇭',car:'🚗', col:'#e91e8c'},
+  {name:'Oman',   flag:'🇴🇲',car:'🚙', col:'#3498db'},
+  {name:'Algeria',flag:'🇩🇿',car:'🚕', col:'#1abc9c'},
+  {name:'Morocco',flag:'🇲🇦',car:'🏎️',col:'#e74c3c'},
 ];
 
-// Gift name → emoji icon mapping
-const GIFT_ICONS = {
+const GICONS={
   'Rose':'🌹','TikTok':'🎵','Finger Heart':'🤞','Sunglasses':'🕶️',
   'Ice Cream':'🍦','Perfume':'💐','Hand Heart':'🫶','Mic':'🎤',
   'Concert':'🎸','Drama Queen':'👑','Lion':'🦁','Universe':'🌌',
-  'GG':'🎮','Panda':'🐼','Football':'⚽','Star':'⭐','Gift':'🎁',
-  'Heart':'❤️','Like':'👍','Crown':'👑','Diamond':'💎','Fire':'🔥',
-  'Rocket':'🚀','Rainbow':'🌈','Cake':'🎂','Money':'💰',
+  'GG':'🎮','Heart':'❤️','Crown':'👑','Diamond':'💎','Fire':'🔥',
+  'Share':'📢','Follow':'➕','Like':'👍','Gift':'🎁','Pop':'🎉',
+};
+function gi(n){return GICONS[n]||'🎁';}
+
+// Settings
+const settings={
+  comments:true, score:true, giftInfo:'icon',
+  target:500, timeout:900, title:'RACE CAR'
 };
 
-function getGiftIcon(name){return GIFT_ICONS[name]||'🎁';}
-
-const MAX=100;
-let sc=Array(10).fill(0),ws=Array(10).fill(0),over=false;
+let sc=Array(10).fill(0), ws=Array(10).fill(0), over=false;
+let timerInterval=null, timeLeft=900;
 const sock=io();
 
-sock.on('status',d=>{d.connected?showGame(d.username):showSetup(d.error||'')});
-
-sock.on('gift',d=>{
-  if(over)return;
-  addPts(d.country,d.points,d.giftName,d.repeat);
-  addFeed(d);
+sock.on('status',d=>{
+  if(d.connected){
+    showGame(d.username);
+    document.getElementById('cpStatus').textContent='✅ Connected: @'+d.username;
+    document.getElementById('cpStatus').className='cp-status conn';
+  } else {
+    document.getElementById('cpStatus').textContent=d.error||'Not Connected';
+    document.getElementById('cpStatus').className='cp-status '+(d.error?'err':'');
+  }
 });
 
-sock.on('like',d=>{if(over)return;addPts(d.country,d.points,'Like',1);});
-sock.on('comment_boost',d=>{if(over)return;addPts(d.country,d.points,'',1);});
+sock.on('gift',d=>{if(over)return;addPts(d.country,d.points,d.giftName,d.viewer,d.repeat);addFeed(d);});
+sock.on('like',d=>{if(over)return;addPts(d.country,d.points,'Like',d.viewer,1);});
+sock.on('comment_boost',d=>{
+  if(over||!settings.comments)return;
+  addPts(d.country,1,'',d.viewer,1);
+});
 
 async function doConnect(){
   const u=document.getElementById('uinp').value.trim();
-  if(!u)return stat('Please enter username','err');
-  stat('Connecting...','load');
-  document.getElementById('cbtn').disabled=true;
-  try{
-    const r=await fetch('/connect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u})});
-    const d=await r.json();
-    if(!d.success){stat(d.error||'Failed','err');document.getElementById('cbtn').disabled=false;}
-  }catch(e){stat('Server error','err');document.getElementById('cbtn').disabled=false;}
-}
-
-function doDisconnect(){fetch('/disconnect',{method:'POST'});showSetup('');}
-function stat(m,t=''){const e=document.getElementById('sstat');e.textContent=m;e.className=t;}
-
-function showGame(u){
-  document.getElementById('setup').style.display='none';
-  document.getElementById('game').style.display='block';
-  document.getElementById('cusr').textContent='@'+u;
-  buildUI();
-}
-function showSetup(err){
-  document.getElementById('setup').style.display='flex';
-  document.getElementById('game').style.display='none';
-  document.getElementById('cbtn').disabled=false;
-  stat(err?err:'Enter your TikTok username',err?'err':'');
-}
-
-function buildUI(){
-  document.getElementById('wbar').innerHTML=C.map((c,i)=>`
-    <div class="wchip" id="wc${i}">
-      <span class="wf">${c.flag}</span>
-      <span class="wn">${c.name}</span>
-      <span class="wc" id="wn${i}">${ws[i]}W</span>
-    </div>`).join('');
-
-  document.getElementById('tracks').innerHTML=C.map((c,i)=>`
-    <div class="row">
-      <div class="rnum" id="rn${i}">${i+1}</div>
-      <div class="fcell">${c.flag}</div>
-      <div class="trk" id="tr${i}">
-        <div class="trk-inner">
-          <div class="trl" id="tl${i}" style="background:${c.col}"></div>
-          <div class="tfin"></div>
-        </div>
-        <div class="tcar" id="tc${i}">${c.car}</div>
-      </div>
-      <div class="pbox">
-        <div class="pval" id="pv${i}">0</div>
-        <div class="plbl">PTS</div>
-      </div>
-    </div>`).join('');
-  over=false;
-}
-
-function addPts(i,p,giftName,repeat){
-  sc[i]=Math.min(sc[i]+p,MAX);
-  updateTrack(i);
-  // Show gift bubble on car
-  if(giftName) showGiftBubble(i,giftName,p,repeat);
-  // Jump car
-  jumpCar(i);
-  if(sc[i]>=MAX)finish(i);
-}
-
-function jumpCar(i){
-  const car=document.getElementById('tc'+i);
-  if(!car)return;
-  car.classList.remove('jump');
-  void car.offsetWidth; // reflow
-  car.classList.add('jump');
-  setTimeout(()=>car.classList.remove('jump'),400);
-}
-
-function showGiftBubble(i,giftName,pts,repeat){
-  const car=document.getElementById('tc'+i);
-  const trk=document.getElementById('tr'+i);
-  if(!car||!trk)return;
-
-  const icon=getGiftIcon(giftName);
-  const bubble=document.createElement('div');
-  bubble.className='gift-bubble';
-  bubble.innerHTML=`<span class="bubble-icon">${icon}</span><span class="bubble-text">${repeat>1?'x'+repeat:''}</span><span class="bubble-pts">+${pts}</span>`;
-
-  // Position bubble above car
-  const carLeft=parseInt(car.style.left)||2;
-  bubble.style.left=(carLeft+10)+'px';
-
-  trk.appendChild(bubble);
-  setTimeout(()=>bubble.remove(),1000);
-}
-
-function updateTrack(i){
-  const tw=document.getElementById('tr'+i).offsetWidth-26;
-  const pos=Math.min((sc[i]/MAX)*tw,tw-2);
-  document.getElementById('tc'+i).style.left=pos+'px';
-  document.getElementById('tl'+i).style.width=pos+'px';
-  document.getElementById('pv'+i).textContent=sc[i];
-
-  // Rankings
-  const sorted=[...sc].map((s,x)=>({s,x})).sort((a,b)=>b.s-a.s);
-  sorted.forEach((it,r)=>{
-    const el=document.getElementById('rn'+it.x);
-    el.textContent=r+1;
-    el.className='rnum '+(r===0?'r1':r===1?'r2':r===2?'r3':'');
-  });
-  const mx=Math.max(...sc);
-  C.forEach((_,x)=>document.getElementById('wc'+x).className='wchip'+(sc[x]===mx&&mx>0?' lead':''));
-}
-
-function addFeed(d){
-  const f=document.getElementById('feed');
-  const ph=f.querySelector('div[style]');if(ph)ph.remove();
-  const c=C[d.country];
-  const icon=getGiftIcon(d.giftName);
-  const el=document.createElement('div');
-  el.className='fitem';
-  el.innerHTML=`
-    <span class="ffl">${c.flag}</span>
-    <span class="fgift-icon">${icon}</span>
-    <div class="finfo">
-      <div class="fv">${esc(d.viewer)}</div>
-      <div class="fg">${esc(d.giftName)}${d.repeat>1?' x'+d.repeat:''} → ${c.name}</div>
-    </div>
-    <div class="fpts">+${d.points}</div>`;
-  f.prepend(el);
-  while(f.children.length>20)f.removeChild(f.lastChild);
-}
-
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
-function finish(w){
-  if(over)return;over=true;
-  ws[w]++;document.getElementById('wn'+w).textContent=ws[w]+'W';
-  const c=C[w];
-  document.getElementById('wfl').textContent=c.flag;
-  document.getElementById('wnm').textContent=c.name+' WINS! 🏆';
-  document.getElementById('wsb').textContent='Total Wins: '+ws[w];
-  document.getElementById('wov').classList.add('show');
-  const mx=Math.max(...ws);
-  C.forEach((_,i)=>document.getElementById('wc'+i).className='wchip'+(ws[i]===mx&&mx>0?' lead':''));
-  for(let i=0;i<50;i++)setTimeout(confetti,i*38);
-}
-
-function confetti(){
-  const el=document.createElement('div');el.className='cp';
-  const cols=['#ffd700','#ff2d55','#2ecc40','#7fdbff','#ff851b','#b10dc9'];
-  el.style.cssText='background:'+cols[Math.floor(Math.random()*cols.length)]+';left:'+Math.random()*100+'vw;top:-10px;animation-duration:'+(1+Math.random()*1.4)+'s';
-  document.body.appendChild(el);setTimeout(()=>el.remove(),2800);
-}
-
-function nextRace(){document.getElementById('wov').classList.remove('show');resetRace(true);}
-function resetRace(kw=false){
-  sc=Array(10).fill(0);if(!kw)ws=Array(10).fill(0);
-  document.getElementById('feed').innerHTML='<div style="text-align:center;color:rgba(255,255,255,.18);font-size:11px;padding:18px 0">Waiting for gifts...</div>';
-  buildUI();
-}
-document.getElementById('uinp').addEventListener('keydown',e=>{if(e.key==='Enter')doConnect();});
-</script>
-</body>
-</html>
+  if(!u)return setStat('Please enter username','err');
+  setStat('Connecting...','load');
+  document.getElement
